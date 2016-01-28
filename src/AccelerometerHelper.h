@@ -24,4 +24,5 @@ public:
 	void scaling();
 };
 
+int testAccelerometer();
 #endif /* ACCELEROMETERHELPER_H_ */
