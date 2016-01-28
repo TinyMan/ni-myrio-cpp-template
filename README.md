@@ -24,3 +24,4 @@ You can build the project. You are ready to go !
 
 # TODO
 * Add remote target to Run/debug on MyRio
+* Add helper classes for Manipulating MyRIO (based on NI examples)
