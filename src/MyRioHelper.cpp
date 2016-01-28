@@ -17,6 +17,6 @@ MyRio::MyRio() {
 }
 
 MyRio::~MyRio() {
-	NiFpga_Status status = MyRio_Close();
+	MyRio_Close();
 }
 

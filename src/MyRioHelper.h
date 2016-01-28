@@ -11,6 +11,7 @@
 #include "MyRio.h"
 
 /* include all other classes */
+#include "AccelerometerHelper.h"
 
 class MyRio {
 private:
@@ -18,6 +19,7 @@ private:
 	~MyRio();
 
 public:
+	Accelerometer Accel;
 	static MyRio& instance() { static MyRio instance; return instance;}
 };
 
