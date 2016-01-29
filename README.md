@@ -1,6 +1,5 @@
 # ni-myrio-cpp-template
-A Template eclipse project for NI MyRio, defining build settings for C++11
-
+A Template eclipse project for NI MyRio, defining build settings for C++11 and helper classes to manipulate the NI FPGA.  
 # How To Use It
 * **Prerequiste**  
 You should follow the guide at http://www.ni.com/tutorial/14619/en/  
