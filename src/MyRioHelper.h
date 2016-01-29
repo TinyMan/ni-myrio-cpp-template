@@ -12,6 +12,7 @@
 
 /* include all other classes */
 #include "AccelerometerHelper.h"
+#include "Irq.h"
 
 class MyRio {
 private:
@@ -20,6 +21,7 @@ private:
 
 public:
 	Accelerometer Accel;
+	class Irq Irq;
 	static MyRio& instance() { static MyRio instance; return instance;}
 };
 

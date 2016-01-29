@@ -8,8 +8,11 @@
 #ifndef IRQ_H_
 #define IRQ_H_
 
+#include "IrqButton.h"
+
 class Irq {
 public:
+	IrqButton Button;
 	Irq();
 	virtual ~Irq();
 };
