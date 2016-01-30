@@ -8,8 +8,10 @@
 #include "MyRioHelper.h"
 
 MyRio& MRio = MyRio::instance();
+extern NiFpga_Session myrio_session;
 
 MyRio::MyRio() {
+	session = myrio_session;
 	NiFpga_Status status = MyRio_Open();
 	if (MyRio_IsNotSuccess(status)) {
 		throw status;

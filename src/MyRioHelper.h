@@ -13,6 +13,7 @@
 /* include all other classes */
 #include "AccelerometerHelper.h"
 #include "Irq.h"
+#include "PWMHelper.h"
 
 class MyRio {
 private:
@@ -20,7 +21,9 @@ private:
 	~MyRio();
 
 public:
+	NiFpga_Session session;
 	Accelerometer Accel;
+	PWMHelper Pwm;
 	class Irq Irq;
 	static MyRio& instance() { static MyRio instance; return instance;}
 };
