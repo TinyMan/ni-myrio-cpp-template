@@ -73,6 +73,22 @@ uint16_t Pwm::getCounter() {
 	return Pwm_Counter(&_channel);
 }
 
+/**
+ * Overview:
+ * Demonstrates using the PWM. Generates a PWM signal from PWM 0 on
+ * connector A.
+ *
+ * Instructions:
+ * 1. Connect an oscilloscope to the PWM 0 pin on connector A.
+ * 2. Run this program.
+ *
+ * Output:
+ * The program generates a 25% duty cycle signal at 10 kHz for 60 s.
+ *
+ * Note:
+ * The Eclipse project defines the preprocessor symbol for the NI myRIO-1900.
+ * Change the preprocessor symbol to use this example with the NI myRIO-1950.
+ */
 int testPwm() {
 	MRio.Pwm.A0.clockSelect(Pwm_4x);
 	MRio.Pwm.A0.counterMax(1000);

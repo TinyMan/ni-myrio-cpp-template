@@ -14,6 +14,7 @@
 #include "AccelerometerHelper.h"
 #include "Irq.h"
 #include "PWMHelper.h"
+#include "EncoderHelper.h"
 
 class MyRio {
 private:
@@ -24,6 +25,8 @@ public:
 	NiFpga_Session session;
 	Accelerometer Accel;
 	PWMHelper Pwm;
+	EncoderHelper Encoder;
+
 	class Irq Irq;
 	static MyRio& instance() { static MyRio instance; return instance;}
 };
