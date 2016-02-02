@@ -14,9 +14,8 @@ IrqListener::IrqListener(uint8_t irqNumber) :
 }
 
 IrqListener::~IrqListener() {
-	unreg();
+	//unreg();
 }
-
 
 // TODO check for errors (uint8_t cast to NiFpga_Irq)
 void IrqListener::wait() {
@@ -27,7 +26,8 @@ void IrqListener::wait() {
 		/*
 		 * Stop the calling thread, wait until a selected IRQ is asserted.
 		 */
-		Irq_Wait(&context, (NiFpga_Irq)irqNumber, &irqAssert, &continueWaiting);
+		Irq_Wait(&context, (NiFpga_Irq) irqNumber, &irqAssert,
+				&continueWaiting);
 
 		/*
 		 * If an IRQ was asserted.
@@ -35,14 +35,17 @@ void IrqListener::wait() {
 		if (irqAssert & (1 << irqNumber)) {
 			printf("IRQ%d,%d\n", irqNumber, ++irqCount);
 
+			// trigger the action set by the user
+			if (_action)
+				_action(this);
+
+
 			/*
 			 * Acknowledge the IRQ(s) when the assertion is done.
 			 */
 			Irq_Acknowledge(irqAssert);
 
-			// trigger the action set by the user
-			if(_action)
-				_action(this);
+
 		}
 
 		/*

@@ -25,12 +25,12 @@ public:
 	 * Refer to Irq_RegisterButtonIrq
 	 * @return a new IrqListener that you can use to attach an action to the interrupt
 	 */
-	virtual IrqListener* reg(const uint8_t irqNumber, const uint32_t count = 1, const Irq_Button_Type type = Irq_Button_RisingEdge);
+	IrqListener* reg(const uint8_t irqNumber, const uint32_t count = 1, const Irq_Button_Type type = Irq_Button_RisingEdge);
 
 	/*
 	 * Refer to Irq_UnregisterButtonIrq
 	 */
-	virtual void unreg(const NiFpga_IrqContext, const uint8_t irqNumber);
+	void unreg(const NiFpga_IrqContext, const uint8_t irqNumber);
 
 private:
 	MyRio_IrqButton _channel;

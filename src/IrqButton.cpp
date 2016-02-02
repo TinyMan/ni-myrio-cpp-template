@@ -59,12 +59,13 @@ int testIrqButton() {
 	IrqListener* listener = MRio.Irq.Button.reg(IrqNumberConfigure, CountConfigure, TriggerTypeConfigure);
 
 	/* configure listener */
-	listener->setAction([](IrqListener*) {
-		std::cout << "Salut !";
+	listener->setAction([](IrqListener*){
+		std::cout << "Bouton appuyé !" << std::endl;
 	});
 
+
 	/* create waiting thread */
-	std::thread thread([=](){
+	std::thread t ([=](){
 		listener->wait();
 	});
 
@@ -73,6 +74,7 @@ int testIrqButton() {
 	 * Read the console output for 60 seconds so that you can recognize the
 	 * explanation and loop times.
 	 */
+	std::cout << "starting loop" << std::endl;
 	time(&currentTime);
 	finalTime = currentTime + LoopDuration;
 	printTime = currentTime;
@@ -96,7 +98,7 @@ int testIrqButton() {
 	/*
 	 * Wait for the end of the IRQ thread.
 	 */
-	thread.join();
+	t.join();
 
 	/*
 	 * Distable the button interrupt, so you can configure this I/O next time.

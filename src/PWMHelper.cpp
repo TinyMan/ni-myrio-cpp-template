@@ -8,6 +8,7 @@
 #include "PWMHelper.h"
 #include "MyRioHelper.h"
 #include <time.h>
+#include <iostream>
 
 PWMHelper::PWMHelper() {
 
@@ -20,9 +21,13 @@ Pwm::~Pwm() {
 	disable();
 }
 
+extern NiFpga_Session myrio_session;
+
 void Pwm::enable(bool inverted) {
-	uint8_t inv = inverted ? Pwm_Inverted : Pwm_NotInverted;
-	Pwm_Configure(&_channel, (Pwm_ConfigureMask) (Pwm_Invert | Pwm_Mode),
+
+	uint8_t inv = false ? Pwm_Inverted : Pwm_NotInverted;
+	Pwm_Configure(&MRio.Pwm.A0._channel,
+			(Pwm_ConfigureMask) (Pwm_Invert | Pwm_Mode),
 			(Pwm_ConfigureSettings) (inv | Pwm_Enabled));
 
 	/*
@@ -40,7 +45,7 @@ void Pwm::enable(bool inverted) {
 	 * The functionality of the bit is specified in the documentation.
 	 */
 
-	selectReg = selectReg | (1 << (2 + pwmNo));
+	selectReg = selectReg | (1 << (2 + this->pwmNo));
 
 	/*
 	 * Write the updated value of the SYSSELECTA register.
@@ -61,7 +66,9 @@ void Pwm::counterCompare(uint16_t compareValue) {
 	Pwm_CounterCompare(&_channel, compareValue);
 }
 
-void Pwm::setDuty(double percent) {
+void Pwm::setDuty(float percent) {
+	counterMax(1000);
+	counterCompare((uint16_t) (percent*1000));
 }
 
 void Pwm::disable() {
@@ -90,9 +97,14 @@ uint16_t Pwm::getCounter() {
  * Change the preprocessor symbol to use this example with the NI myRIO-1950.
  */
 int testPwm() {
+
+	printf("PWM\n");
+
 	MRio.Pwm.A0.clockSelect(Pwm_4x);
 	MRio.Pwm.A0.counterMax(1000);
-	MRio.Pwm.A0.counterCompare(250);
+	MRio.Pwm.A0.counterCompare(500);
+	//float dutyCycle= 0.25;
+	//MRio.Pwm.A0.setDuty(dutyCycle);
 	MRio.Pwm.A0.enable();
 
 	/*
@@ -101,11 +113,12 @@ int testPwm() {
 	 * observed using an external instrument.
 	 */
 
-    time_t currentTime;
-    time_t finalTime;
-	time (&currentTime);
+	time_t currentTime;
+	time_t finalTime;
+	time(&currentTime);
 	finalTime = currentTime + 60;
 	while (currentTime < finalTime) {
+		//std::cout << "inner loop\n";
 		time(&currentTime);
 	}
 

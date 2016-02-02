@@ -10,7 +10,7 @@
 #include "PWM.h"
 
 class Pwm {
-protected:
+public:
 	MyRio_Pwm _channel;
 	uint8_t pwmNo;
 	MyRio1900Fpga20_ControlU8 sysSelect;
@@ -21,7 +21,7 @@ public:
 	virtual void clockSelect(Pwm_ClockDivider divider);
 	virtual void counterMax(uint16_t max);
 	virtual void counterCompare(uint16_t compareValue);
-	virtual void setDuty(double percent);
+	virtual void setDuty(float percent);
 	virtual uint16_t getCounter();
 
 };
