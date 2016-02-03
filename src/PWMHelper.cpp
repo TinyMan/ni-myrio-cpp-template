@@ -21,7 +21,6 @@ Pwm::~Pwm() {
 	disable();
 }
 
-extern NiFpga_Session myrio_session;
 
 void Pwm::enable(bool inverted) {
 
@@ -67,8 +66,7 @@ void Pwm::counterCompare(uint16_t compareValue) {
 }
 
 void Pwm::setDuty(float percent) {
-	counterMax(1000);
-	counterCompare((uint16_t) (percent*1000));
+	counterCompare((uint16_t) (percent*_counterMax));
 }
 
 void Pwm::disable() {
@@ -100,11 +98,10 @@ int testPwm() {
 
 	printf("PWM\n");
 
-	MRio.Pwm.A0.clockSelect(Pwm_4x);
-	MRio.Pwm.A0.counterMax(1000);
-	MRio.Pwm.A0.counterCompare(500);
-	//float dutyCycle= 0.25;
-	//MRio.Pwm.A0.setDuty(dutyCycle);
+	MRio.Pwm.A0.clockSelect(Pwm_1x);
+	float dutyCycle= 0.5;
+	MRio.Pwm.A0.setFrequency(FREQUENCY_HZ(1000));
+	MRio.Pwm.A0.setDuty(dutyCycle);
 	MRio.Pwm.A0.enable();
 
 	/*
@@ -123,4 +120,9 @@ int testPwm() {
 	}
 
 	return 0;
+}
+
+void Pwm::setFrequency(float freq) {
+	_counterMax = (1/(25 * freq ) );
+	counterMax(_counterMax);
 }

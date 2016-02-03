@@ -8,12 +8,15 @@
 #ifndef PWMHELPER_H_
 #define PWMHELPER_H_
 #include "PWM.h"
+#define FREQUENCY_40KHZ 0.00004
+#define FREQUENCY_HZ(a) ((float)a/1000000000)
 
 class Pwm {
 public:
 	MyRio_Pwm _channel;
 	uint8_t pwmNo;
 	MyRio1900Fpga20_ControlU8 sysSelect;
+	uint16_t _counterMax = 0;
 public:
 	virtual ~Pwm();
 	virtual void enable(bool inverted = false);
@@ -23,6 +26,7 @@ public:
 	virtual void counterCompare(uint16_t compareValue);
 	virtual void setDuty(float percent);
 	virtual uint16_t getCounter();
+	virtual void setFrequency(float freq);
 
 };
 class PwmA0 : public Pwm{
