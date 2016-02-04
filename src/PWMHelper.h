@@ -8,8 +8,16 @@
 #ifndef PWMHELPER_H_
 #define PWMHELPER_H_
 #include "PWM.h"
-#define FREQUENCY_40KHZ 0.00004
-#define FREQUENCY_HZ(a) ((float)a/1000000000)
+
+/* frequency preset */
+#define CLOCKDIVIDER(a) (a << 16)
+#define COUNTERMAX(a) (a)
+#define FREQUENCY_50HZ uint32_t(CLOCKDIVIDER(Pwm_32x) | COUNTERMAX(25000))
+#define FREQUENCY_100HZ uint32_t(CLOCKDIVIDER(Pwm_16x) | COUNTERMAX(25000))
+#define FREQUENCY_10KHZ uint32_t(CLOCKDIVIDER(Pwm_4x) | COUNTERMAX(1000))
+#define FREQUENCY_1KHZ uint32_t(CLOCKDIVIDER(Pwm_4x) | COUNTERMAX(10000))
+
+/** **/
 
 class Pwm {
 public:
@@ -17,16 +25,19 @@ public:
 	uint8_t pwmNo;
 	MyRio1900Fpga20_ControlU8 sysSelect;
 	uint16_t _counterMax = 0;
+	uint16_t _counterCompare = 0;
+	Pwm_ClockDivider _clockDivider = Pwm_1x;
+
 public:
 	virtual ~Pwm();
-	virtual void enable(bool inverted = false);
-	virtual void disable();
-	virtual void clockSelect(Pwm_ClockDivider divider);
-	virtual void counterMax(uint16_t max);
-	virtual void counterCompare(uint16_t compareValue);
-	virtual void setDuty(float percent);
-	virtual uint16_t getCounter();
-	virtual void setFrequency(float freq);
+	void enable(bool inverted = false);
+	void disable();
+	void clockSelect(Pwm_ClockDivider divider);
+	void counterMax(uint16_t max);
+	void counterCompare(uint16_t compareValue);
+	void setDuty(float percent);
+	uint16_t getCounter();
+	void setFrequency(uint32_t freq);
 
 };
 class PwmA0 : public Pwm{

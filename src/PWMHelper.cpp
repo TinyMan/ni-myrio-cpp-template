@@ -54,14 +54,17 @@ void Pwm::enable(bool inverted) {
 }
 
 void Pwm::clockSelect(Pwm_ClockDivider divider) {
+	_clockDivider = divider;
 	Pwm_ClockSelect(&_channel, divider);
 }
 
 void Pwm::counterMax(uint16_t max) {
+	_counterMax = max;
 	Pwm_CounterMaximum(&_channel, max);
 }
 
 void Pwm::counterCompare(uint16_t compareValue) {
+	_counterCompare = compareValue;
 	Pwm_CounterCompare(&_channel, compareValue);
 }
 
@@ -77,6 +80,14 @@ void Pwm::disable() {
 uint16_t Pwm::getCounter() {
 	return Pwm_Counter(&_channel);
 }
+
+void Pwm::setFrequency(uint32_t freq) {
+	_counterMax = uint8_t(freq >> 16);
+	_clockDivider = Pwm_ClockDivider(freq);
+	counterMax(_counterMax);
+	clockSelect(_clockDivider);
+}
+
 
 /**
  * Overview:
@@ -99,13 +110,15 @@ int testPwm() {
 	printf("PWM\n");
 
 	Pwm& pwm = MRio.Pwm.B0;
+	pwm.setFrequency(FREQUENCY_50HZ);
+	/* should be equivalent to:
 	pwm.clockSelect(Pwm_32x);
-	float dutyCycle= 0.25;
-	//pwm.setFrequency(FREQUENCY_HZ(100));
-	//pwm.setDuty(dutyCycle);
 	pwm.counterMax(25000);
-	pwm.counterCompare(10000);
+	*/
+
 	pwm.enable();
+
+	float dutyCycle= 0.25;
 
 	/*
 	 * Normally, the main function runs a long running or infinite loop.
@@ -130,9 +143,4 @@ int testPwm() {
 	}
 
 	return 0;
-}
-
-void Pwm::setFrequency(float freq) {
-	_counterMax = (1/(25 * freq ) );
-	counterMax(_counterMax);
 }
