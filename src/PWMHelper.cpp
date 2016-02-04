@@ -98,11 +98,14 @@ int testPwm() {
 
 	printf("PWM\n");
 
-	MRio.Pwm.A0.clockSelect(Pwm_1x);
-	float dutyCycle= 0.5;
-	MRio.Pwm.A0.setFrequency(FREQUENCY_HZ(1000));
-	MRio.Pwm.A0.setDuty(dutyCycle);
-	MRio.Pwm.A0.enable();
+	Pwm& pwm = MRio.Pwm.B0;
+	pwm.clockSelect(Pwm_32x);
+	float dutyCycle= 0.25;
+	//pwm.setFrequency(FREQUENCY_HZ(100));
+	//pwm.setDuty(dutyCycle);
+	pwm.counterMax(25000);
+	pwm.counterCompare(10000);
+	pwm.enable();
 
 	/*
 	 * Normally, the main function runs a long running or infinite loop.
@@ -114,8 +117,15 @@ int testPwm() {
 	time_t finalTime;
 	time(&currentTime);
 	finalTime = currentTime + 60;
+	time_t nextInvert = currentTime;
+	using namespace std;
 	while (currentTime < finalTime) {
 		//std::cout << "inner loop\n";
+		if(currentTime >= nextInvert){
+			dutyCycle = 1 - dutyCycle;
+			//pwm.setDuty(dutyCycle);
+			nextInvert = currentTime + 3;
+		}
 		time(&currentTime);
 	}
 
