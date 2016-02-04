@@ -9,10 +9,12 @@
 #define IRQ_H_
 
 #include "IrqButton.h"
+#include "IrqTimer.h"
 
 class Irq {
 public:
 	IrqButton Button;
+	IrqTimer Timer;
 	Irq();
 	virtual ~Irq();
 };

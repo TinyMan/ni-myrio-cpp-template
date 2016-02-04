@@ -18,7 +18,7 @@ public:
 	uint8_t irqNumber;
 	NiFpga_Bool continueWaiting = NiFpga_True;
 
-	IrqListener(uint8_t irqNumber);
+	IrqListener(uint8_t irqNumber = 0);
 
 	virtual ~IrqListener();
 
