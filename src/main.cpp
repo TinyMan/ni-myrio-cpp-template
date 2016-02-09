@@ -1,5 +1,5 @@
 #include <iostream>
-#include "MyRioHelper.h"
+#include "HelperClasses/MyRioHelper.h"
 
 using namespace std;
 

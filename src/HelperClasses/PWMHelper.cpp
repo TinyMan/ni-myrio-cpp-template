@@ -82,10 +82,36 @@ uint16_t Pwm::getCounter() {
 }
 
 void Pwm::setFrequency(uint32_t freq) {
+	using namespace std;
+	switch(freq){
+	case FREQUENCY_10KHZ:
+	case FREQUENCY_1KHZ:
+		clockSelect(Pwm_4x);
+		break;
+	case FREQUENCY_50HZ:
+		clockSelect(Pwm_32x);
+		break;
+	case FREQUENCY_100HZ:
+		clockSelect(Pwm_16x);
+		break;
+	}
+	switch(freq){
+	case FREQUENCY_10KHZ:
+		counterMax(1000);
+		break;
+	case FREQUENCY_1KHZ:
+		counterMax(10000);
+		break;
+	case FREQUENCY_50HZ:
+	case FREQUENCY_100HZ:
+		counterMax(25000);
+		break;
+	}/*
 	_counterMax = uint8_t(freq >> 16);
-	_clockDivider = Pwm_ClockDivider(freq);
-	counterMax(_counterMax);
-	clockSelect(_clockDivider);
+	_clockDivider = Pwm_ClockDivider(freq);*/
+	cout << _counterCompare << "\n" << _clockDivider << endl;
+	/*counterMax(_counterMax);
+	clockSelect(_clockDivider);*/
 }
 
 
@@ -109,8 +135,9 @@ int testPwm() {
 
 	printf("PWM\n");
 
-	Pwm& pwm = MRio.Pwm.B0;
+	Pwm& pwm = MRio.Pwm.A0;
 	pwm.setFrequency(FREQUENCY_50HZ);
+
 	/* should be equivalent to:
 	pwm.clockSelect(Pwm_32x);
 	pwm.counterMax(25000);
@@ -118,8 +145,9 @@ int testPwm() {
 
 	pwm.enable();
 
-	float dutyCycle= 0.25;
-
+	float dutyCycle= 0.035;
+	float i = 0.001;
+	pwm.setDuty(dutyCycle);
 	/*
 	 * Normally, the main function runs a long running or infinite loop.
 	 * Keep the program running for 60 seconds so that the PWM output can be
@@ -135,9 +163,11 @@ int testPwm() {
 	while (currentTime < finalTime) {
 		//std::cout << "inner loop\n";
 		if(currentTime >= nextInvert){
-			dutyCycle = 1 - dutyCycle;
-			//pwm.setDuty(dutyCycle);
-			nextInvert = currentTime + 3;
+			if(dutyCycle <= 0.00 || dutyCycle >= 0.15) i = -i;
+			dutyCycle = dutyCycle + i;
+			pwm.setDuty(dutyCycle);
+			cout << dutyCycle << endl;
+			nextInvert = currentTime + 1;
 		}
 		time(&currentTime);
 	}
