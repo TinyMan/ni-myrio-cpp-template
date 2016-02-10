@@ -110,7 +110,7 @@ void Pwm::setFrequency(uint32_t freq) {
 	}/*
 	_counterMax = uint8_t(freq >> 16);
 	_clockDivider = Pwm_ClockDivider(freq);*/
-	cout << _counterCompare << "\n" << _clockDivider << endl;
+	//cout << _counterCompare << "\n" << _clockDivider << endl;
 	/*counterMax(_counterMax);
 	clockSelect(_clockDivider);*/
 }
