@@ -145,7 +145,7 @@ int testPwm() {
 
 	pwm.enable();
 
-	float dutyCycle= 0.035;
+	float dutyCycle= 0.75;
 	float i = 0.001;
 	pwm.setDuty(dutyCycle);
 	/*
@@ -163,7 +163,7 @@ int testPwm() {
 	while (currentTime < finalTime) {
 		//std::cout << "inner loop\n";
 		if(currentTime >= nextInvert){
-			if(dutyCycle <= 0.00 || dutyCycle >= 0.15) i = -i;
+			if(dutyCycle <= 0.090 || dutyCycle >= 0.1) i = -i;
 			dutyCycle = dutyCycle + i;
 			pwm.setDuty(dutyCycle);
 			cout << dutyCycle << endl;

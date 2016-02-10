@@ -4,6 +4,6 @@
 using namespace std;
 
 int main() {
-	testPwm();
+	MRio.Irq.Timer.test();
 	return 0;
 }

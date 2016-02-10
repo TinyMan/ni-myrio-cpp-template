@@ -31,7 +31,7 @@ void IrqTimer::unreg(const NiFpga_IrqContext& context) {
 }
 
 int IrqTimer::test() {
-	int LoopDuration = 60, LoopSteps = 1;
+	int LoopDuration = 10, LoopSteps = 1;
 	time_t currentTime;
 	time_t printTime;
 	time_t finalTime;
