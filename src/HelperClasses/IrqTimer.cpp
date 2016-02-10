@@ -10,6 +10,7 @@
 #include "MyRioHelper.h"
 #include <iostream>
 #include <thread>
+#include <cstdio>
 
 IrqTimer::IrqTimer() {
 	_channel.timerWrite = IRQTIMERWRITE;
@@ -40,7 +41,7 @@ int IrqTimer::test() {
 	 * Configure the timer IRQ and set the time interval. The IRQ occurs after the time interval.
 	 */
 	const uint32_t timeoutValue = 5000000;
-
+	using namespace std;
 	printf("Timer IRQ:\n");
 
 	/* configure Irq Timer */

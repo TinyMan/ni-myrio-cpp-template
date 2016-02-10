@@ -7,7 +7,7 @@
 
 #ifndef IRQ_H_
 #define IRQ_H_
-
+using namespace std;
 #include "IrqButton.h"
 #include "IrqTimer.h"
 

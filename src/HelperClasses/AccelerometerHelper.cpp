@@ -5,8 +5,11 @@
  *      Author: TinyMan
  */
 #include <iostream>
+#include <cstdio>
+#include <ctime>
 #include "AccelerometerHelper.h"
 #include "MyRioHelper.h"
+using namespace std;
 
 Accelerometer::Accelerometer() {
 	/*

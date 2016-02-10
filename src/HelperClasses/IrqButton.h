@@ -8,6 +8,7 @@
 #ifndef IRQBUTTON_H_
 #define IRQBUTTON_H_
 
+using namespace std;
 #include "MyRio.h"
 #include "ButtonIRQ.h"
 #include "IrqListener.h"

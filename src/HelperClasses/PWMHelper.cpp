@@ -9,6 +9,7 @@
 #include "MyRioHelper.h"
 #include <time.h>
 #include <iostream>
+#include <cstdio>
 
 PWMHelper::PWMHelper() {
 

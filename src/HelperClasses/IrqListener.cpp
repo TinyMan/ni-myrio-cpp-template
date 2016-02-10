@@ -7,6 +7,7 @@
 
 #include "MyRioHelper.h"
 #include "IrqListener.h"
+#include <cstdio>
 
 IrqListener::IrqListener(uint8_t irqNumber) :
 		irqNumber(irqNumber) {

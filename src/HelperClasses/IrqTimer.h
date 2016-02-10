@@ -9,7 +9,7 @@
 #define IRQTIMER_H_
 #include "TimerIRQ.h"
 #include "IrqListener.h"
-
+using namespace std;
 class IrqTimer {
 private:
 	MyRio_IrqTimer _channel;

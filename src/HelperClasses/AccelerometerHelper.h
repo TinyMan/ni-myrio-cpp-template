@@ -7,7 +7,7 @@
 
 #ifndef ACCELEROMETERHELPER_H_
 #define ACCELEROMETERHELPER_H_
-
+using namespace std;
 #include "Accelerometer.h"
 
 class Accelerometer {

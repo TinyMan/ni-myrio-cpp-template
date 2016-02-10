@@ -8,6 +8,7 @@
 #ifndef PWMHELPER_H_
 #define PWMHELPER_H_
 #include "PWM.h"
+using namespace std;
 
 /* frequency preset */
 #define CLOCKDIVIDER(a) (a << 16)

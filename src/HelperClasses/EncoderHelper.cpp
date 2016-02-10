@@ -8,6 +8,7 @@
 #include "EncoderHelper.h"
 #include "MyRioHelper.h"
 #include <time.h>
+#include <cstdio>
 
 EncoderHelper::EncoderHelper() {
 

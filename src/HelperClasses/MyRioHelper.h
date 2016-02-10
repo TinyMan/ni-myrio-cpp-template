@@ -9,6 +9,7 @@
 #define MYRIOHELPER_H_
 
 #include "MyRio.h"
+using namespace std;
 
 /* include all other classes */
 #include "AccelerometerHelper.h"
