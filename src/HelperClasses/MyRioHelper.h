@@ -16,6 +16,7 @@ using namespace std;
 #include "Irq.h"
 #include "PWMHelper.h"
 #include "EncoderHelper.h"
+#include "DioHelper.h"
 
 class MyRio {
 private:
